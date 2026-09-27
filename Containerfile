@@ -1,18 +1,15 @@
-# 1. Base your OS on Bazzite (Keeps all Steam/gaming optimizations)
+# 1. Base your OS on Bazzite
 FROM ghcr.io/ublue-os/bazzite:stable
 
-# 2. Remove default apps you don't want (Optional)
-# Enter package names separated by spaces.
-RUN rpm-ostree override remove firefox
-
-# 3. Add the native applications you want pre-installed
+# 2. Add native terminal tools
 RUN rpm-ostree install \
     fastfetch \
     git \
     zsh \
     tmux
-# Pre-install Flatpaks (Discord, Sober, Prism Launcher)
-RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && \
+
+# 3. Pre-install desktop apps via Flatpak
+RUN flatpak remote-add --if-not-exists flathub https://flathub.org && \
     flatpak install --system -y flathub \
     com.discordapp.Discord \
     org.vinegarhq.Sober \
